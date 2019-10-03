@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width">
     <link rel="icon" href="https://maeyler.github.io/favicon.ico">
-    <title>xxx </title>
+    <title>Class Work </title>
 
   <style> /* CSS comment */
     body { max-width: 440px; }
@@ -22,10 +22,13 @@
 <body>   <!-- HTML comment: Modify all items marked xxx -->
 
 <h2 id=title>This text is not shown. Why?</h2>
-xxx 
-<input type=number id=inp value=0 onChange="out.innerText=value">
+FtoC:
+<input type=number id=inp1 value=0 onChange="document.getElementById('inp2').value=(value-32)/1.8">
 &emsp;
-<input type=button id=but value=xxx onClick="increment()">
+CtoF:
+<input type=number id=inp2 value=0 onChange="document.getElementById('inp1').value=(value*1.8)+32">
+&emsp;
+<input type=button id=but value=Convert onClick="increment()">
 <p id=out>This text is not shown. Why?</p>
 
 <hr />
