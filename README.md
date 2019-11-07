@@ -11,3 +11,5 @@
 [CW5-Eloquent](./EloquentJS.html)
 
 [Homework2](./hwdatabase.html)
+
+[CW6-File Checking](./cw6/cw6.html)
