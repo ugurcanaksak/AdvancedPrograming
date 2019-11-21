@@ -1,0 +1,179 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width">
+    
+  
+    <title>Title set by setHourMin()</title>
+
+  <style>
+    body { max-width: 450px; }
+    #clock {
+        font-size: 48px;
+        background-color: blue;
+        color: white;
+        text-align: center;
+        margin-top: 20px;
+        margin-bottom: 20px;
+    }
+  </style>
+</head>
+
+<body>
+<h2>Time Measurement</h2>
+
+<h3>Simple Clock</h3>
+<div id=clock></div>
+
+<h3>Set Intersection</h3>
+<button onClick='timing(Map1);'>Method 1</button>
+<button onClick='timing(array1);'>Method 2</button>
+<p id=out>Question 3 in 
+<a href="https://maeyler.github.io/BLM305-2018/exam/Midterm%20solution.pdf">
+2018 exam</a>
+</p>
+
+<hr />
+<h3>Sample code</h3>
+<pre id=sample></pre>
+<hr />
+
+<script>
+"use strict";
+class Student {
+  constructor(id, isim, ortalama, dersler) {
+    this.id = id;
+    this.isim = isim;
+    this.ortalama = ortalama;
+    this.dersler = dersler;
+  }
+  toString() {
+    return (
+      "Id: " +
+      this.id + "\n" +
+      " İsim: " +
+      this.isim + "\n" +
+      " Ortalama: " +
+      this.ortalama + "\n" +
+      " Dersler: " +
+      this.dersler + "\n" +
+      "-------------------------------------------------------" + "\n"
+    );
+  }
+}
+// Simple Clock
+var hm, time;
+//random sayı üretildi
+var rand=Math.random() * 100000000;
+var studentIDs=[];
+var cwmap=new Map();
+function twoDigits(t) {
+    if (t>9) return ""+t;
+    return "0"+t;
+}
+function setHourMin() {
+    const d = new Date();
+    hm = twoDigits(d.getHours())+":"
+        +twoDigits(d.getMinutes());
+    document.title = "Clock "+hm; 
+    //console.log(hm);
+}
+function count() {
+    const d = new Date();
+    let sec = twoDigits(d.getSeconds());
+    if (sec == "00") setHourMin();
+    clock.innerText = hm+":"+sec;
+    time = setTimeout(count, 1000);
+}
+// Make a large Set
+const url = "https://maeyler.github.io/JS/data/"
+const array = []     // Student objects
+const set = new Set() // distinct names
+function readData(file) {
+    console.log("readData "+file)
+    fetch(url+file)
+        .then(r => r.text())
+        .then(addStudents)
+        .catch(console.error)
+}
+function parseStudent(line) {
+    let [id, name, gpa, ...L] = line.split('\t')
+    let std = new Student(id, name, gpa)
+    std.courses = L; return std
+}
+function addStudents(txt) {
+    
+    let msg = "<br>Data contains "
+         + txt.length+" chars, "
+    let a = txt.split('\n')
+    msg += a.length+" lines <br>"
+    for (let s of a) {
+      let std = parseStudent(s)
+      //öğrenciler eklendi
+      cwmap.set(std.id,s);
+      studentIDs.push(std.id);
+      array.push(std); set.add(std.name)
+    }
+    msg += array.length+" students, "
+    msg += set.size+" distinct names"
+    out.innerHTML += msg
+}
+// Set Intersection & timing
+function intersect1(a, b) { //fast
+    let s = new Set()
+    for (let x of a)
+      if (b.has(x)) s.add(x)
+    return s
+}
+function intersect2(a, b) { //slow
+    let s = new Set()
+    for (let x of a)
+      for (let y of b)
+        if (x == y) s.add(x)
+    return s
+}
+function timing(f) {
+    let t = performance.now() //more accurate than Date.now()
+    let x = f(set, set)   //calculate intersection by itself
+    t = performance.now() - t
+    let s = f.name+": "+t.toPrecision(3)+" msec"
+    out.innerHTML += "<br>"+s; console.log(s)
+}
+    //title.innerText = document.title;
+    sample.innerText = intersect1+'\n'+intersect2
+    setHourMin(); count()
+    readData("Students.txt")
+    function Map1(){
+        let cnt=0;
+        for (let index = 0; index < array.length; index++) {
+            if(cwmap.has(rand)){
+            cnt++;
+        }
+        let temp=parseInt(rand)
+         rand+=10; 
+         rand=rand.toString();    
+        }
+    
+        console.log(cnt);
+
+    }
+    function array1(){
+        let cnt=0;
+        for (let index = 0; index < 10000; index++) {
+            if(studentIDs.includes(rand)){
+        cnt++;
+        }
+        let temp=parseInt(rand)
+         rand+=10; 
+         rand=rand.toString();  
+        }
+    
+        console.log(cnt);
+
+    }
+</script>
+
+</body>
+</html>
