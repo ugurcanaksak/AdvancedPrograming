@@ -13,3 +13,5 @@
 [Homework2](./hwdatabase.html)
 
 [CW6-File Checking](./cw6/cw6.html)
+
+[CW7-Timing](./cw7.html)
