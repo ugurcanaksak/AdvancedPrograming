@@ -1,0 +1,112 @@
+
+<!DOCTYPE html>
+<!-- saved from url=(0014)about:internet -->
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    
+    <meta name="viewport" content="width=device-width">
+    <link rel="icon" href="https://maeyler.github.io/305/images/icon192.png">
+    <title>Student Database </title>
+
+  <style>
+    .link {
+        color: blue;
+        cursor: pointer;
+        font-style: italic;
+    }
+    .course {
+        visibility: hidden;
+        font: 10px arial, sans-serif;
+        color: white;
+        background: blue;
+        cursor: text;
+        padding: 6px;
+        position: absolute;
+        height: 90px;
+        overflow-y: auto;
+    }
+    .link:hover .course { 
+        visibility: visible; 
+    }
+  </style>
+</head>
+
+<body>
+
+<h2 id="title">Courses</h2>
+
+
+
+<p>Courses: 
+<input type="string" onchange="getData(value)">
+</p>
+<p>Result:</p>
+<div id="result"></div>
+<b>Sample code</b>
+<pre id="sample">
+    function getData(param){
+        let array= []
+          fetch("https://maeyler.github.io/JS/data/Courses.txt").then(r => r.text().then(text=>{
+            let newArray = text.split("\n");
+            console.log(newArray);
+          for (let line2 of newArray) {
+            let veri2 = line2.split("\t");
+            console.log(veri2);
+            let course = new Course(veri2[0], veri2[1], veri2[2], veri2.slice(3));
+            array.push(course);
+            for (let kurs of array ){
+                if(kurs.kod==param){
+                    result.innerText = kurs
+                }
+            }
+    }
+          }));
+          
+    
+    
+    
+    }
+<hr>
+
+<script>
+"use strict";
+
+
+    class Course {
+  constructor(kod, saat, tarih, sinif) {
+    this.kod = kod;
+    this.saat = saat;
+    this.tarih = tarih;
+    this.sinif = sinif;
+  }
+  toString() {
+    return ("Adı: " +this.kod + "\n" +" Saat: " +this.saat + "\n" +" Tarih: " +this.tarih + "\n" +" Sınıflar :" +this.sinif + "\n");
+  }
+}
+
+function getData(param){
+    let array= []
+      fetch("https://maeyler.github.io/JS/data/Courses.txt").then(r => r.text().then(text=>{
+        let tempArray = text.split("\n");
+        console.log(tempArray);
+      for (let line of tempArray) {
+        let data = line.split("\t");
+        console.log(data);
+        let course = new Course(data[0], data[1], data[2], data.slice(3));
+        array.push(course);
+        for (let kurs of array ){
+            if(kurs.kod==param){
+                result.innerText = kurs
+            }
+        }
+}
+      }));
+      
+
+
+
+}
+</script>
+
+
+
+</body></html>
