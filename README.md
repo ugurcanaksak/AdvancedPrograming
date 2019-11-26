@@ -8,10 +8,12 @@
 
 [CW3](./CW3.png)
 
-[CW5-Eloquent](./EloquentJS.html)
+[CW4](./cw4.html)
 
-[Homework2](./hwdatabase.html)
+[CW5-Eloquent](./EloquentJS.html)
 
 [CW6-File Checking](./cw6/cw6.html)
 
 [CW7-Timing](./cw7.html)
+
+[Homework2](./hwdatabase.html)
