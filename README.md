@@ -22,4 +22,4 @@
 
 [Homework2](./hwdatabase.html)
 
-[Homework3](./simon-says.html)
+[Homework3](./simon_says.html)
