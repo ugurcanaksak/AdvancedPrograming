@@ -21,3 +21,5 @@
 [CW9](./cw9.html)
 
 [Homework2](./hwdatabase.html)
+
+[Homework3](./simon-says.html)
