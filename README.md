@@ -16,6 +16,8 @@
 
 [CW7-Timing](./cw7.html)
 
+[CW8-Planets](./Planets.html)
+
 [CW9](./cw9.html)
 
 [Homework2](./hwdatabase.html)
