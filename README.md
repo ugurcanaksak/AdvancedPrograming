@@ -23,3 +23,5 @@
 [Homework2](./hwdatabase.html)
 
 [Homework3](./simon_says.html)
+
+[Project](./Project.html)
