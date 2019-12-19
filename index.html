@@ -1,59 +1,90 @@
 <!DOCTYPE html>
 <html>
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width">
-    <meta name="theme-color" content="blue" />
-    <meta name="author" content="Ugurcan Aksak, Istanbul, 2019" />
-    <meta name="description" content="BLM305 FSMV University" />
+    <head>
+        <title>Space Invaders</title>
+        <link rel="stylesheet" type="text/css" href="css/core.css">
+        
+        <style>
     
-    <link rel="icon" href="https://ugurcanaksak.github.io/AdvancedPrograming/icon.png">
-    <link rel="manifest" href="manifest.json">
-    <title>BLM 305</title>
+            /* Styling needed for a fullscreen canvas and no scrollbars. */
+            body, html { 
+            width: 100%;
+            height: 100%;
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+            }
 
-  <style>
-    body { font: 15px sans-serif; margin: 12px; }
-    h2  { margin-top: 20px; margin-bottom: 0; }
-  </style>
-</head>
+            #starfield {
+                width:100%;
+                height:100%;
+                z-index: -1;
+                position: absolute;
+                left: 0px;
+                top: 0px;
+            }
+            #gamecontainer {
+                width: 800px;
+                margin-left: auto;
+                margin-right: auto;
+            }
+            #gamecanvas { 
+                width: 800px;
+                height: 600px;
+            }
+            #info {
+                width: 800px;
+                margin-left: auto;
+                margin-right: auto;
+            }
+        </style>
+    </head>
+    <body>
+        <div id="starfield"></div>
+        <div id="gamecontainer">
+        <canvas id="gameCanvas"></canvas>
+        </div>
+        
 
-<body>
+        <script src="js/starfield.js"></script>
+        <script src="js/spaceinvaders.js"></script>
+        <script>
 
-<h1>BLM 305</h1>
+            //  Create the starfield.
+            var container = document.getElementById('starfield');
+            var starfield = new Starfield();
+            starfield.initialise(container);
+            starfield.start();
 
-<h2>Advanced Programming</h2>
+            //  Setup the canvas.
+            var canvas = document.getElementById("gameCanvas");
+            canvas.width = 800;
+            canvas.height = 600;
 
-<h3>ClassWorks</h3>
-    
-<p><a href="https://ugurcanaksak.github.io/AdvancedPrograming/CW1.png">ClassWork 1</a>: Yuvarlak Diyagram</p>
-    
-<p><a href="https://ugurcanaksak.github.io/AdvancedPrograming/Counting.html">ClassWork 2</a>: Sayı Artırma</p>
-    
-<p><a href="https://ugurcanaksak.github.io/AdvancedPrograming/convert.html">ClassWork 2</a>: Convert to C to F and F to C</p>
-  
-<p><a href="https://ugurcanaksak.github.io/AdvancedPrograming/CW3.png">ClassWork 3</a>: Inspector, Sayaç</p>
-    
-<p><a href="https://ugurcanaksak.github.io/AdvancedPrograming/cw4.html">ClassWork 4</a>: Promise & Fetch</p>
-    
-<p><a href="https://ugurcanaksak.github.io/AdvancedPrograming/EloquentJS.html">ClassWork 5</a>: Inspector</p>
-    
-<p><a href="https://ugurcanaksak.github.io/AdvancedPrograming/cw6/cw6.html">ClassWork 6</a>: File Checking</p>
-    
-<p><a href="https://ugurcanaksak.github.io/AdvancedPrograming/cw7.html">ClassWork 7</a>: Timing</p>
-    
-<p><a href="https://ugurcanaksak.github.io/AdvancedPrograming/Planets.html">ClassWork 8</a>: Planets</p>
-    
-<p><a href="https://ugurcanaksak.github.io/AdvancedPrograming/cw9.html">ClassWork 9</a>: GitHub Users</p>
+            //  Create the game.
+            var game = new Game();
 
-<h3>Homeworks</h3>
+            //  Initialise it with the game canvas.
+            game.initialise(canvas);
 
-    
-<p><a href="https://ugurcanaksak.github.io/AdvancedPrograming/hwdatabase.html">HomeWork 2</a>: Database</p>
+            //  Start the game.
+            game.start();
 
+            //  Listen for keyboard events.
+            window.addEventListener("keydown", function keydown(e) {
+                var keycode = e.which || window.event.keycode;
+                //  Supress further processing of left/right/space (37/29/32)
+                if(keycode == 37 || keycode == 39 || keycode == 32) {
+                    e.preventDefault();
+                }
+                game.keyDown(keycode);
 
-<script>
-    navigator.serviceWorker.register('sw.js')
-</script>
-
-</body>
+            });
+            window.addEventListener("keyup", function keydown(e) {
+                var keycode = e.which || window.event.keycode;
+                game.keyUp(keycode);
+            });
+        </script>
+        
+    </body>
 </html>
