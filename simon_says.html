@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>simon says</title>
+  </head>
+<style>
+#container {
+  width: 400px;
+  height: 400px;
+  position: relative;
+  background: yellow;
+}
+#animate {
+  width: 200px;
+  height: 200px;
+  position: absolute;
+  background-color: purple;
+}
+#animate2 {
+  right: 0px;
+  width: 200px;
+  height: 200px;
+  position: absolute;
+  background-color: blue;
+}
+#animate3 {
+  bottom: 0px;
+  width: 200px;
+  height: 200px;
+  position: absolute;
+  background-color: pink;
+}
+#animate4 {
+  bottom: 0px;
+  right: 0px;
+  width: 200px;
+  height: 200px;
+  position: absolute;
+  background-color: yellow;
+}
+
+
+
+
+</style>
+<body id="body">
+
+<p><button onclick="myMove()">Play!</button></p> 
+<p id="check"><button onclick="check()">Check</button></p> 
+
+<div id ="container">
+<div id ="animate" onclick="input.push(0)"></div>
+<div id ="animate2" onclick="input.push(1)"></div>
+<div id ="animate3" onclick="input.push(2)"></div>
+<div id ="animate4" onclick="input.push(3)"></div>
+</div>
+
+<script>
+var input=[];
+var answer=[];
+var t1 = { background: ["purple","white", "purple"] };
+var t2 = { background: ["blue","white", "blue"] };
+var t3 = { background: ["pink","white", "pink"] };
+var t4 = { background: ["yellow","white", "yellow"] };
+var rand;
+var cubeList=[animate,animate2,animate3,animate4];
+var animeList=[t1,t2,t3,t4];
+function myMove(){
+
+ rand=Math.floor((Math.random()*10)%4);
+ console.log(rand);
+ cubeList[rand].animate(animeList[rand],1000);
+ answer.push(rand);
+}
+function check(){
+  if(JSON.stringify(input)==JSON.stringify([]));
+  else if(JSON.stringify(input)==JSON.stringify(answer)) body.animate({ background: ["white","green", "white"] },1000);
+  else body.animate({ background: ["white","red", "white"] },1000);
+  input=[];
+  answer=[];
+}
+</script>
+</body>
+</html>
