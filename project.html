@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="eng">
+
+<head>
+    <title>Advanced Programing Project</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <div id="background">
+        <div id="ship"></div>
+        <div id="enemies"></div>
+        <div id="missiles"></div>
+    </div>
+
+    <script>
+        var ship = {
+            top: 700,
+            left: 550
+        }
+        var missiles = [];
+        var enemies=[
+            {left:200,top:100},
+            {left:300,top:100},
+            {left:400,top:100},
+            {left:500,top:100},
+            {left:600,top:100},
+            {left:700,top:100},
+            {left:800,top:100},
+            {left:900,top:100},
+            {left:200,top:175},
+            {left:300,top:175},
+            {left:400,top:175},
+            {left:500,top:175},
+            {left:600,top:175},
+            {left:700,top:175},
+            {left:800,top:175},
+            {left:900,top:175},
+
+        ];
+        document.onkeydown = function (e) {
+            console.log(e.keyCode);
+            if (e.keyCode == 37) {
+                //sol
+                ship.left = ship.left - 10;
+                moveShip();
+            } else if (e.keyCode == 39) {
+                //sağ
+                ship.left = ship.left + 10;
+                moveShip();
+            } else if (e.keyCode == 32) {
+                missiles.push({
+                    left: ship.left+15 ,
+                    top: ship.top
+                });
+                drawMissiles();
+            }
+        }
+        function moveShip() {
+            document.getElementById('ship').style.left = ship.left + "px";
+        }
+        function drawMissiles(){
+            
+            document.getElementById('missiles').innerHTML="";
+            for(let i=0;i<missiles.length;i++){
+                document.getElementById('missiles').innerHTML+=
+                `<div class='missile' style='left:${missiles[i].left}px; 
+                top:${missiles[i].top}px;'></div>`;                         
+                
+            }
+        }
+        function moveMissiles(){
+            for(let i=0;i<missiles.length;i++){
+                missiles[i].top=missiles[i].top-5;
+            }
+        }
+        function drawEnemies(){
+                       
+            document.getElementById('enemies').innerHTML="";
+            for(let i=0;i<enemies.length;i++){
+                document.getElementById('enemies').innerHTML+=
+                `<div class='enemy' style='left:${enemies[i].left}px; 
+                top:${enemies[i].top}px;'></div>`;                         
+            }
+        }
+        function moveEnemies(){
+            for(let i=0;i<enemies.length;i++){
+                enemies[i].top=enemies[i].top+3;
+            }
+        }
+        function collisionDetection(){
+            for (let i = 0; i < enemies.length; i++) {
+                for (let j = 0; j < missiles.length; j++) {
+                    if(
+                        missiles[j].left >= enemies[i].left  &&
+                        missiles[j].left <= (enemies[i].left + 50)  &&
+                        missiles[j].top <= (enemies[i].top + 50)  &&
+                        missiles[j].top >= enemies[i].top
+                    ){
+                        enemies.splice(i,1);
+                        missiles.splice(j,1);
+                    }                  
+                }
+            }
+        }
+        function loop(){
+            setTimeout(loop,60);
+            moveMissiles();
+            drawMissiles();
+            moveEnemies();
+            drawEnemies();
+            collisionDetection();
+        }
+        loop();
+
+    </script>
+</body>
+
+</html>>
