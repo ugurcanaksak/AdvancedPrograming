@@ -145,16 +145,16 @@
 			
         }
 		function drawScore(ctx){
-		//ctx.fillText=('Score: ',  40, 40);
+		
 		ctx.fillStyle='white';
-		ctx.font='75px Exo';
-		ctx.fillText('Game Over Final Score: ' + score, 50, 400);
+		ctx.font='50px Exo';
+		ctx.fillText('Game Over Final Score: ' + score+"Press r to restart", 50, 400);
 		}
 		
 	
         function loop(){
 		
-            setTimeout(loop,speed);
+            setTimeout(loop,10);
             if(over==false){
 			moveMissiles();
             drawMissiles();
@@ -162,7 +162,13 @@
             drawEnemies();
             collisionDetection();
 			}
-			else drawScore(ctx);;
+			else {
+			drawScore(ctx);
+			document.onkeydown = function (e) {
+			if(e.keyCode==82){
+			location.reload(false);}
+			}
+			}
 
 			
         }
