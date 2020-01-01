@@ -11,6 +11,7 @@
         <div id="ship"></div>
         <div id="enemies"></div>
         <div id="missiles"></div>
+	<canvas id="myCanvas" width="1000" height="500"></canvas>
     </div>
 <p>Ref: <a href="https://github.com/dwmkerr/spaceinvaders" 
    target="NewTab">dwmkerr</a>
@@ -21,7 +22,13 @@
             top: 700,
             left: 550
         }
+		var c = document.getElementById("myCanvas");
+        var ctx = c.getContext("2d");
+		
+		var score=0;
         var missiles = [];
+		var over=false;
+		var speed=200;
         var enemies=[
             {left:200,top:100},
             {left:300,top:100},
@@ -42,7 +49,7 @@
 
         ];
         document.onkeydown = function (e) {
-            console.log(e.keyCode);
+            
             if (e.keyCode == 37) {
                 //sol
                 ship.left = ship.left - 10;
@@ -59,9 +66,34 @@
                 drawMissiles();
             }
         }
+		
+		function restart(){
+		if(speed==100) speed=speed-20
+		else speed=speed-50;
+		enemies=[
+            {left:200,top:100},
+            {left:300,top:100},
+            {left:400,top:100},
+            {left:500,top:100},
+            {left:600,top:100},
+            {left:700,top:100},
+            {left:800,top:100},
+            {left:900,top:100},
+            {left:200,top:175},
+            {left:300,top:175},
+            {left:400,top:175},
+            {left:500,top:175},
+            {left:600,top:175},
+            {left:700,top:175},
+            {left:800,top:175},
+            {left:900,top:175},
+
+        ];
+		}
         function moveShip() {
             document.getElementById('ship').style.left = ship.left + "px";
         }
+		
         function drawMissiles(){
             
             document.getElementById('missiles').innerHTML="";
@@ -74,7 +106,7 @@
         }
         function moveMissiles(){
             for(let i=0;i<missiles.length;i++){
-                missiles[i].top=missiles[i].top-5;
+                missiles[i].top=missiles[i].top-10;
             }
         }
         function drawEnemies(){
@@ -94,30 +126,50 @@
         function collisionDetection(){
             for (let i = 0; i < enemies.length; i++) {
                 for (let j = 0; j < missiles.length; j++) {
-                    if(
-                        missiles[j].left >= enemies[i].left  &&
+                    if( missiles[j].left >= enemies[i].left  &&
                         missiles[j].left <= (enemies[i].left + 50)  &&
                         missiles[j].top <= (enemies[i].top + 50)  &&
-                        missiles[j].top >= enemies[i].top
-                    ){
+                        missiles[j].top >= enemies[i].top){
                         enemies.splice(i,1);
                         missiles.splice(j,1);
+						score=score+10;
                     }                  
                 }
-            }
-            if(enemies.lenght==0)aler("YOU WON");
+				
+				if(enemies[i].top==700) over=true;           
+			}
+            if(enemies.length==0){
+			restart();
+			}
+			
+			
         }
+		function drawScore(ctx){
+		//ctx.fillText=('Score: ',  40, 40);
+		ctx.fillStyle='white';
+		ctx.font='75px Exo';
+		ctx.fillText('Game Over Final Score: ' + score, 50, 400);
+		}
+		
+	
         function loop(){
-            setTimeout(loop,100);
-            moveMissiles();
+		
+            setTimeout(loop,speed);
+            if(over==false){
+			moveMissiles();
             drawMissiles();
             moveEnemies();
             drawEnemies();
             collisionDetection();
+			}
+			else drawScore(ctx);;
+
+			
         }
-        loop();
+		loop();
+		
 
     </script>
 </body>
 
-</html>>
+</html>
