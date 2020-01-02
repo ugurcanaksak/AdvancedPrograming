@@ -20,6 +20,8 @@
 
 [CW9](./cw9.html)
 
+[Homework1](./hw1.html)
+
 [Homework2](./hwdatabase.html)
 
 [Homework3](./simon_says.html)
